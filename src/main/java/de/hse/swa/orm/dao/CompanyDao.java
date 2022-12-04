@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import de.hse.swa.orm.model.Address;
 import de.hse.swa.orm.model.Company;
 import de.hse.swa.orm.model.Contract;
-import de.hse.swa.orm.model.User;
 
 @ApplicationScoped
 public class CompanyDao {

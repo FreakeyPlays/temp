@@ -35,9 +35,8 @@ public class UserResource {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Path("add")
   public User addUser(User user){
-    System.out.println(user);
+    System.out.println(user.getCustomerId());
     User tempUser = _userDao.addUser(user);
     // _userDao.setCompany(tempUser, company);
 

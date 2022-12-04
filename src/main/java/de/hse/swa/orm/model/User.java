@@ -50,8 +50,8 @@ public class User {
   private List<Contract> contracts;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name="COMPANY_ID", referencedColumnName = "ID")
-  private Company companyId;
+  @JoinColumn(name="COMPANY_ID", referencedColumnName = "id")
+  public Company companyId;
 
   public User(){}
 

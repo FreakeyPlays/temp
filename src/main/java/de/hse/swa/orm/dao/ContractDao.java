@@ -58,12 +58,16 @@ public class ContractDao {
   }
 
   @Transactional
-  public void updateContract(Contract contract) {
+  public Contract updateContract(Contract contract) {
   	entityManager.merge(contract);
+    return contract;
   }
   
   @Transactional
-  public void deleteContract(Contract contract) {
-  	entityManager.remove(entityManager.contains(contract) ? contract : entityManager.merge(contract));
+  public void deleteContract(Long id) {
+  	 TypedQuery<Company> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.id=:id", Company.class);
+	  query.setParameter("id", id);
+    Company company = query.getSingleResult();
+  	entityManager.remove(entityManager.contains(company) ? company : entityManager.merge(company));
   }
 }
