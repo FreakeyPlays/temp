@@ -1,0 +1,37 @@
+_id: req_ce0155cfeb054ddd8e73fcc4d96df1da
+type: Request
+parentId: fld_15d748a2a2f648b194f1e314b32d0404
+modified: 1670182699617
+created: 1670153994822
+url: "{{ _.base_url }}{{ _.path }}"
+name: Create a Company
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"companyName": "Google",
+    	"department": "IT",
+    	"address": {
+    		"country": "Germany",
+    		"area": "Baden-Württemberg",
+    		"city": "Stuttgart",
+    		"zipCode": "71136",
+    		"streetName": "Königsstraße",
+    		"houseNumber": 666
+    	}
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670153896304
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

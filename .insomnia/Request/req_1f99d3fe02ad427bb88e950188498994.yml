@@ -1,0 +1,21 @@
+_id: req_1f99d3fe02ad427bb88e950188498994
+type: Request
+parentId: fld_15d748a2a2f648b194f1e314b32d0404
+modified: 1670155210175
+created: 1670154072772
+url: "{{ _.base_url }}{{ _.path }}/10"
+name: Delete Company by ID
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1670153888219.625
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

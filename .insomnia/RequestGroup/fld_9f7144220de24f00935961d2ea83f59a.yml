@@ -1,0 +1,15 @@
+_id: fld_9f7144220de24f00935961d2ea83f59a
+type: RequestGroup
+parentId: wrk_ff178386b61b4099b6f3cbc2a155d465
+modified: 1670154640764
+created: 1670153839067
+name: SWA
+description: ""
+environment:
+  base_url: "{{ _.domain }}"
+  domain: localhost:8080
+environmentPropertyOrder:
+  "&":
+    - base_url
+    - domain
+metaSortKey: -1670153839067

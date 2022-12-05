@@ -1,0 +1,21 @@
+_id: req_95f7d07ed6e645edb728c26c1341ca82
+type: Request
+parentId: fld_0c89492eb02f43a18264311aa7c07b08
+modified: 1670154793893
+created: 1670153929236
+url: "{{ _.base_url }}{{ _.path }}"
+name: Get All User of Company
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1670153811462
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
