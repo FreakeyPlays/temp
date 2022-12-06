@@ -1,0 +1,31 @@
+_id: req_f117071e28ae48bc81e362920d290a87
+type: Request
+parentId: fld_c5cbcc08865f47a0895d692fe25b110e
+modified: 1670174700461
+created: 1670154024708
+url: "{{ _.base_url }}{{ _.path }}"
+name: Create a Contract
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"startDate": "2022-12-08",
+    	"endDate": "2022-12-24",
+    	"licenceKey": "",
+    	"version": ""
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670153887079
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

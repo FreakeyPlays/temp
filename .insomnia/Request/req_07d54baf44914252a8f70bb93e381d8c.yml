@@ -1,0 +1,21 @@
+_id: req_07d54baf44914252a8f70bb93e381d8c
+type: Request
+parentId: fld_c5cbcc08865f47a0895d692fe25b110e
+modified: 1670154766124
+created: 1670154083987
+url: "{{ _.base_url }}{{ _.path }}"
+name: Update Contract
+description: ""
+method: PUT
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1670153830416.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

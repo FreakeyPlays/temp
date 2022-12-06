@@ -1,0 +1,39 @@
+_id: req_d038e688e42f4a7bafd5be7d79bf5ce3
+type: Request
+parentId: fld_15d748a2a2f648b194f1e314b32d0404
+modified: 1670155191454
+created: 1670154062457
+url: "{{ _.base_url }}{{ _.path }}"
+name: Update Company
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"companyName": "Google",
+    	"department": "Design",
+    	"id": 10,
+    	"address": {
+    		"area": "Baden-Württemberg",
+    		"city": "Stuttgart",
+    		"country": "Germany",
+    		"houseNumber": 666,
+    		"id": 10,
+    		"streetName": "Königsstraße",
+    		"zipCode": 71254
+    	}
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670153889360.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

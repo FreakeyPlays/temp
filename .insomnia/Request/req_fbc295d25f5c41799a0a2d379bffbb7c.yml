@@ -1,0 +1,53 @@
+_id: req_fbc295d25f5c41799a0a2d379bffbb7c
+type: Request
+parentId: fld_0c89492eb02f43a18264311aa7c07b08
+modified: 1670182743483
+created: 1670154011582
+url: "{{ _.base_url }}{{ _.path }}"
+name: Create a User
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"lastName": "Merck",
+    	"firstName": "Chris",
+    	"username": "freakey",
+    	"email": "chris@gmx.de",
+    	"phoneNumbers": [
+    		{"number": "015207417058"}, 
+    		{"number": "0715633941"}
+    	],
+    	"isAdmin": true,
+    	"password": "password",
+    	"companyId": {
+    		"address": {
+    			"area": "Baden-Württemberg",
+    			"city": "Stuttgart",
+    			"country": "Germany",
+    			"houseNumber": 666,
+    			"id": 10,
+    			"streetName": "Königsstraße",
+    			"zipCode": 71136
+    		},
+    		"companyName": "Google",
+    		"contracts": [],
+    		"department": "IT",
+    		"id": 10,
+    		"users": []
+    	}
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1670153811562
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,21 @@
+_id: req_c9b134948d9d4e69922f0ad1a521438f
+type: Request
+parentId: fld_15d748a2a2f648b194f1e314b32d0404
+modified: 1670154776645
+created: 1670153896254
+url: "{{ _.base_url }}{{ _.path }}"
+name: Get All Companies
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1670153896254
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
