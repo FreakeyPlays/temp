@@ -1,5 +1,7 @@
 package de.hse.swa.orm.model;
 
+import java.io.Serializable;
+
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_address")
-public class Address {
+public class Address implements Serializable {
   @Id
   @SequenceGenerator(name="addressSeq", sequenceName="ZSEQ_ADDRESS_ID", allocationSize=1, initialValue=10)
   @GeneratedValue(generator="addressSeq")
@@ -38,8 +40,8 @@ public class Address {
   private int houseNumber;
 
   @OneToOne
-  @JsonbTransient
   @JoinColumn(name = "COMPANY_ID")
+  @JsonbTransient
   private Company company;
 
   public Address(){}

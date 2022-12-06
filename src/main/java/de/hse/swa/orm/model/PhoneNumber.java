@@ -1,5 +1,7 @@
 package de.hse.swa.orm.model;
 
+import java.io.Serializable;
+
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_phoneNumber")
-public class PhoneNumber {
+public class PhoneNumber implements Serializable {
   @Id
   @SequenceGenerator(name="phoneNumberSeq", sequenceName="ZSEQ_PHONENUMBER_ID", allocationSize=1, initialValue=10)
   @GeneratedValue(generator="phoneNumberSeq")
@@ -56,6 +58,6 @@ public class PhoneNumber {
 
   @Override
   public String toString() {
-    return "PhoneNumber [id=" + id + ", number=" + number + "]";
+    return "PhoneNumber [id=" + id + ", number=" + number + ", User" + user + "]";
   }
 }

@@ -1,8 +1,8 @@
 package de.hse.swa.jaxrs.resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,6 +23,8 @@ import de.hse.swa.orm.model.User;
 
 @Path("/user")
 public class UserResource {
+  @ApplicationScoped
+
   @Inject
   UserDao _userDao;
 
@@ -32,22 +34,25 @@ public class UserResource {
   @Inject
   CompanyDao _companyDao;
 
+  /**
+   * Creates a new User based on Data from the Body
+   * @param user
+   * @return the new User
+   */
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public User addUser(User user){
-    System.out.println(user.getCustomerId());
     User tempUser = _userDao.addUser(user);
-    // _userDao.setCompany(tempUser, company);
 
-    List<PhoneNumber> phoneList = new ArrayList<>();
     for(int i = 0; i <= 1; i++){
-      tempUser.getPhoneNumbers().get(i).setUser(tempUser);
-      phoneList.add(_phoneNumberDao.addPhoneNumber(tempUser.getPhoneNumbers().get(i)));
+      PhoneNumber tempNumber = tempUser.getPhoneNumbers().get(i);
+
+      tempNumber.setUser(tempUser);
+      _phoneNumberDao.addPhoneNumber(tempNumber);
     }
 
-
-    return tempUser;
+    return user;
   }
 
   /**
@@ -56,7 +61,6 @@ public class UserResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
   public List<User> getAllUsers(){
     return _userDao.getAllUser();
   }
@@ -68,7 +72,6 @@ public class UserResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
   @Path("{id}")
   public User getUser(@PathParam("id") Long id){
     return _userDao.getUser(id);
@@ -81,7 +84,6 @@ public class UserResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
   @Path("company/{id}")
   public List<User> getUserByCompany(@PathParam("id") Long companyId){
     Company company = _companyDao.getCompany(companyId);
@@ -105,7 +107,6 @@ public class UserResource {
    */
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
   @Path("{id}")
   public void deleteUser(@PathParam("id") Long id){
     _userDao.deleteUser(id);

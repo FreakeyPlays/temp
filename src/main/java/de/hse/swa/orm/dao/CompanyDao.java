@@ -18,13 +18,9 @@ public class CompanyDao {
   EntityManager entityManager; 
 
   @Transactional 
-  public Company addCompany(String name, String department, Address address) {
-    Company company = new Company();
-
-    company.setCompanyName(name);
-    company.setDepartment(department);
-    company.setAddress(address);
-    
+  public Company addCompany(Company company) {
+    Address address = company.getAddress();
+    address.setCompany(company);
     entityManager.persist(company);
     return company;
   }

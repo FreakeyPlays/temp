@@ -1,9 +1,10 @@
 package de.hse.swa.orm.model;
 
+import java.io.Serializable;
+
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_feature")
-public class Feature {
+public class Feature implements Serializable {
   @Id
   @SequenceGenerator(name="featureSeq", sequenceName="ZSEQ_FEATURE_ID", allocationSize=1, initialValue=10)
   @GeneratedValue(generator="featureSeq")
@@ -23,7 +24,7 @@ public class Feature {
   @Column(name="NUMBER")
   private int number;
 
-  @ManyToOne(fetch=FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name="CONTRACT_ID", referencedColumnName = "ID")
   @JsonbTransient
   private Contract contract;
@@ -46,8 +47,16 @@ public class Feature {
     this.number = number;
   }
 
+  public Contract getContract() {
+    return contract;
+  }
+
+  public void setContract(Contract contract) {
+    this.contract = contract;
+  }
+
   @Override
   public String toString() {
-    return "Feature [id=" + id + ", number=" + number + "]";
+    return "Feature [\n\tid=" + id + ", \n\tnumber=" + number + "\n]";
   }
 }

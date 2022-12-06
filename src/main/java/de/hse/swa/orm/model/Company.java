@@ -1,5 +1,7 @@
 package de.hse.swa.orm.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_company")
-public class Company {
+public class Company implements Serializable {
   @Id
   @SequenceGenerator(name="companySeq", sequenceName="ZSEQ_COMPANY_ID", allocationSize=1, initialValue=10)
   @GeneratedValue(generator="companySeq")
@@ -28,14 +29,13 @@ public class Company {
   @Column(name="DEPARTMENT", length=64)
   private String department;
 
-  @OneToMany(mappedBy = "companyId")
+  @OneToMany(mappedBy = "companyId", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Contract> contracts;
 
-  @OneToMany(mappedBy = "companyId")
+  @OneToMany(mappedBy = "companyId", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<User> users;
 
-  @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true)
-  @JoinColumn(name="ADDRESS_ID")
+  @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
   private Address address;
 
   public Company(){}
@@ -76,16 +76,36 @@ public class Company {
     this.department = department;
   }
 
-  public List<Contract> getContracts() {
-    return contracts;
+  public List<Long> getContracts() {
+    List<Long> list = new ArrayList<>();
+
+    if(contracts == null){
+      return list;
+    }
+
+    for(int i = 0; i < contracts.size(); i++){
+      list.add(contracts.get(i).getId());
+    }
+
+    return list;
   }
 
   public void setContracts(List<Contract> contracts) {
     this.contracts = contracts;
   }
 
-  public List<User> getUsers() {
-    return users;
+  public List<Long> getUsers() {
+    List<Long> list = new ArrayList<>();
+
+    if(users == null){
+      return list;
+    }
+
+    for(int i = 0; i < users.size(); i++){
+      list.add(users.get(i).getId());
+    }
+    
+    return list;
   }
 
   public void setUsers(List<User> users) {

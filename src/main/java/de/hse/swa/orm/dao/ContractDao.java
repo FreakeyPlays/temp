@@ -18,16 +18,6 @@ public class ContractDao {
   EntityManager entityManager;
 
   @Transactional 
-  public Contract addContract(LocalDate startDate, LocalDate endDate, String licenseKey) {
-      Contract contract = new Contract();
-      contract.setStartDate(startDate);
-      contract.setEndDate(endDate);
-      contract.setLicenseKey(licenseKey);
-      entityManager.persist(contract);
-      return contract;
-  } 
-
-  @Transactional 
   public Contract addContract(Contract contract) {
       entityManager.persist(contract);
       return contract;

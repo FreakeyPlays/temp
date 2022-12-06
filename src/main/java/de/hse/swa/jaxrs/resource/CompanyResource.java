@@ -2,6 +2,7 @@ package de.hse.swa.jaxrs.resource;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,11 +16,12 @@ import javax.ws.rs.core.MediaType;
 
 import de.hse.swa.orm.dao.AddressDao;
 import de.hse.swa.orm.dao.CompanyDao;
-import de.hse.swa.orm.model.Address;
 import de.hse.swa.orm.model.Company;
 
 @Path("/company")
 public class CompanyResource {
+  @ApplicationScoped
+
   @Inject
   CompanyDao _companyDao;
 
@@ -35,11 +37,8 @@ public class CompanyResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public Company addCompany(Company company){
-    Address newAddress = _addressDao.addAddress(company.getAddress());
-    Company newCompany = _companyDao.addCompany(company.getCompanyName(), company.getDepartment(), newAddress);
-    _companyDao.addAddress(newCompany, newAddress);
-
-    return newCompany;
+    _companyDao.addCompany(company);
+    return company;
   }
 
   /**

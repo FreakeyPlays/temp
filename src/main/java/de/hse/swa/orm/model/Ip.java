@@ -1,5 +1,7 @@
 package de.hse.swa.orm.model;
 
+import java.io.Serializable;
+
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_ips")
-public class Ip {
+public class Ip implements Serializable {
   @Id
   @SequenceGenerator(name="ipSeq", sequenceName="ZSEQ_IP_ID", allocationSize=1, initialValue=10)
   @GeneratedValue(generator="ipSeq")
@@ -46,8 +48,16 @@ public class Ip {
     this.address = address;
   }
 
+  public Contract getContract() {
+    return contract;
+  }
+
+  public void setContract(Contract contract) {
+    this.contract = contract;
+  }
+
   @Override
   public String toString() {
-    return "Ip [id=" + id + ", address=" + address + "]";
+    return "Ip [\n\tid=" + id + ", \n\taddress=" + address + "\n]";
   }
 }

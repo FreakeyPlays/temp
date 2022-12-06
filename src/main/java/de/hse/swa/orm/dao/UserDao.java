@@ -17,9 +17,9 @@ public class UserDao {
   EntityManager entityManager;
 
   @Transactional
-  public User addUser(User newUser){
-    entityManager.persist(newUser);
-    return newUser;
+  public User addUser(User user){
+    entityManager.persist(user);
+    return user;
   }
 
   public List<User> getAllUser(){
@@ -28,8 +28,8 @@ public class UserDao {
   }
 
   public List<User> getUsersByCompany(Company company){
-    TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user where user.company.id=:id", User.class);
-    query.setParameter("id", company.getId());
+    TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user where user.companyId.id=:id", User.class)
+      .setParameter("id", company.getId());
     return query.getResultList();
   }
 
@@ -67,8 +67,63 @@ public class UserDao {
 
   @Transactional
   public void setCompany(User user, Company company){
-    user.setCustomerId(company);
+    user.setCompanyId(company);
     entityManager.merge(user);
   }
 
+
+
+
+
+
+  // public User getUser(User user){
+  //   return entityManager.find(User.class, user.getId());
+  // }
+
+  // public List<User> getAllUsers(){
+  //   TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user", User.class);
+  //   return query.getResultList();
+  // }
+
+  // public List<User> getUsersByCompany(Company company){
+  //   TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user where user.companyId.id=:id", User.class)
+  //     .setParameter("id", company.getId());
+  //   return query.getResultList();
+  // }
+
+  // @Transactional
+  // public User save(User user){
+  //   if(user.getId() != null){
+  //     entityManager.merge(user);
+  //   } else {
+  //     entityManager.persist(user);
+  //   }
+
+  //   return user;
+  // }
+
+  // @Transactional
+  // public void removeUser(User user){
+  //   entityManager.remove(user);
+  // }
+
+  // @Transactional
+  // public void removeAllUser(){
+  //   try {
+  //     TypedQuery<User> query = entityManager.createQuery("DELETE FROM User WHERE id >= 0", User.class);
+  //     query.executeUpdate();
+  //   } catch(SecurityException | IllegalStateException e) {
+  //     e.printStackTrace();
+  //   }
+
+  //   return;
+  // }
+
+  // public Boolean login(String username, String password){
+  //   TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user WHERE user.username=:username AND user.password=:password", User.class)
+  //     .setParameter("username", username)
+  //     .setParameter("password", password);
+  //   List<User> results = query.getResultList();
+  //   return (results.size() > 0);
+  // }
 }

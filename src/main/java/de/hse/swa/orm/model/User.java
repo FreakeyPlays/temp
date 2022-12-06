@@ -1,8 +1,9 @@
 package de.hse.swa.orm.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_user")
-public class User {
+public class User implements Serializable {
   
   @Id
   @SequenceGenerator(name="userSeq", sequenceName="ZSEQ_USER_ID", allocationSize=1, initialValue=10)
@@ -25,33 +26,33 @@ public class User {
   @Column(name="ID", nullable=false, unique=true)
   private Long id;
 
-  @Column(name="LAST_NAME", length=32, nullable=false)
+  @Column(name="LAST_NAME", length=32)
   private String lastName;
 
   @Column(name="FIRST_NAME", length=32)
   private String firstName;
 
-  @Column(name="USERNAME", length=32)
+  @Column(name="USERNAME", length=32, unique = true)
   private String username;
 
-  @Column(name="EMAIL", length=64, nullable=false, unique=true)
+  @Column(name="EMAIL", length=64, unique=true)
   private String email;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+  @OneToMany(mappedBy = "user", orphanRemoval = true)
   private List<PhoneNumber> phoneNumbers;
 
-  @Column(name="IS_ADMIN", nullable=false)
+  @Column(name="IS_ADMIN")
   private boolean isAdmin;
 
-  @Column(name="PASSWORD", nullable=false)
+  @Column(name="PASSWORD")
   private String password;
 
   @ManyToMany(mappedBy = "users")
   private List<Contract> contracts;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name="COMPANY_ID", referencedColumnName = "id")
-  public Company companyId;
+  @JoinColumn(name="COMPANY_ID", referencedColumnName = "ID")
+  private Company companyId;
 
   public User(){}
 
@@ -74,6 +75,10 @@ public class User {
 
   public Long getId() {
     return id;
+  }
+
+  public void setId(Long id){
+    this.id = id;
   }
 
   public String getLastName() {
@@ -132,26 +137,35 @@ public class User {
     this.password = password;
   }
 
-  public List<Contract> getContracts() {
-    return contracts;
+  public List<Long> getContracts() {
+    List<Long> list = new ArrayList<>();
+
+    if(contracts == null){
+      return list;
+    }
+
+    for(int i = 0; i < contracts.size(); i++){
+      list.add(contracts.get(i).getId());
+    }
+    return list;
   }
 
   public void setContracts(List<Contract> contracts) {
     this.contracts = contracts;
   }
 
-  public Company getCustomerId() {
-    return companyId;
+  public Long getCompanyId() {
+    return companyId.getId();
   }
 
-  public void setCustomerId(Company companyId) {
+  public void setCompanyId(Company companyId) {
     this.companyId = companyId;
   }
 
   @Override
   public String toString() {
-    return "User [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", username=" + username
-        + ", email=" + email + ", phoneNumbers=" + phoneNumbers + ", isAdmin=" + isAdmin + 
-        ", password=" + password + ", contracts=" + contracts + ", companyId=" + companyId + "]";
+    return "User [\n\tid=" + id + ", \n\tlastName=" + lastName + ", \n\tfirstName=" + firstName + ", \n\tusername=" + username
+        + ", \n\temail=" + email + ", \n\tphoneNumbers=" + phoneNumbers + ", \n\tisAdmin=" + isAdmin + 
+        ", \n\tpassword=" + password + ", \n\tcontracts=" + contracts + ", \n\tcompanyId=" + companyId + "\n]";
   }
 }
