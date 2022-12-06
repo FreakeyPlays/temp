@@ -157,6 +157,11 @@ public class Contract implements Serializable {
     this.users = users;
   }
 
+  @JsonbTransient
+  public Company getCompany(){
+    return companyId;
+  }
+
   public Long getCompanyId() {
     return companyId.getId();
   }

@@ -14,9 +14,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import de.hse.swa.orm.dao.AddressDao;
 import de.hse.swa.orm.dao.CompanyDao;
 import de.hse.swa.orm.model.Company;
+import de.hse.swa.orm.model.Contract;
+import de.hse.swa.orm.model.User;
 
 @Path("/company")
 public class CompanyResource {
@@ -24,9 +25,6 @@ public class CompanyResource {
 
   @Inject
   CompanyDao _companyDao;
-
-  @Inject
-  AddressDao _addressDao;
 
   /**
    * Creates a new Company with Data from the Body
@@ -36,8 +34,9 @@ public class CompanyResource {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Company addCompany(Company company){
-    _companyDao.addCompany(company);
+  @Path("create")
+  public Company createCompany(Company company){
+    _companyDao.save(company);
     return company;
   }
 
@@ -47,7 +46,7 @@ public class CompanyResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("all")
   public List<Company> getAllCompanies(){
     return _companyDao.getAllCompanies();
   }
@@ -59,10 +58,45 @@ public class CompanyResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
   @Path("{id}")
-  public Company getCompany(@PathParam("id") Long id){
-    return _companyDao.getCompany(id);
+  public Company getCompanyById(@PathParam("id") Long id){
+    return _companyDao.getCompanyById(id);
+  }
+
+  /**
+   * Get a Company by Company Company Name
+   * @param id
+   * @return a Company
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("name/{companyName}")
+  public Company getCompanyByName(@PathParam("companyName") String companyName){
+    return _companyDao.getCompanyByName(companyName);
+  }
+
+  /**
+   * Get a Company by Company ID
+   * @param id
+   * @return a List of Companies
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{id}/users")
+  public List<User> getUsersOfCompany(@PathParam("id") Long id){
+    return _companyDao.getCompanyById(id).getUserObjects();
+  }
+
+  /**
+   * Get a Company by Company ID
+   * @param id
+   * @return a List of Companies
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{id}/contracts")
+  public List<Contract> getContractsOfCompany(@PathParam("id") Long id){
+    return _companyDao.getCompanyById(id).getContractObjects();
   }
 
   /**
@@ -73,8 +107,18 @@ public class CompanyResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
+  @Path("update")
   public Company updateCompany(Company company){
-    return _companyDao.updateCompany(company);
+    return _companyDao.save(company);
+  }
+
+  /**
+   * Delete all Companies
+   */
+  @DELETE
+  @Path("remove/all")
+  public void removeAllCompanies(){
+    _companyDao.removeAllCompanies();
   }
 
   /**
@@ -82,10 +126,8 @@ public class CompanyResource {
    * @param id
    */
   @DELETE
-  @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Path("{id}")
-  public void deleteCompany(@PathParam("id") Long id){
-    _companyDao.deleteCompany(id);
+  @Path("remove/{id}")
+  public void removeCompany(@PathParam("id") Long id){
+    _companyDao.removeCompany(id);
   }
 }

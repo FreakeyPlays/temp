@@ -58,6 +58,6 @@ public class Ip implements Serializable {
 
   @Override
   public String toString() {
-    return "Ip [\n\tid=" + id + ", \n\taddress=" + address + "\n]";
+    return "Ip [id=" + id + ", address=" + address + "]";
   }
 }

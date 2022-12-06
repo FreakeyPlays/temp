@@ -18,6 +18,7 @@ import de.hse.swa.orm.dao.CompanyDao;
 import de.hse.swa.orm.dao.PhoneNumberDao;
 import de.hse.swa.orm.dao.UserDao;
 import de.hse.swa.orm.model.Company;
+import de.hse.swa.orm.model.Contract;
 import de.hse.swa.orm.model.PhoneNumber;
 import de.hse.swa.orm.model.User;
 
@@ -42,17 +43,26 @@ public class UserResource {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public User addUser(User user){
-    User tempUser = _userDao.addUser(user);
+  @Path("create")
+  public User createUser(User user){
+    User newUser = _userDao.save(user);
 
-    for(int i = 0; i <= 1; i++){
-      PhoneNumber tempNumber = tempUser.getPhoneNumbers().get(i);
+    for(int i = 0; i < user.getPhoneNumbers().size(); i++){
+      PhoneNumber newPhoneNumber = newUser.getPhoneNumbers().get(i);
 
-      tempNumber.setUser(tempUser);
-      _phoneNumberDao.addPhoneNumber(tempNumber);
+      newPhoneNumber.setUser(newUser);
+      _phoneNumberDao.addPhoneNumber(newPhoneNumber);
     }
 
     return user;
+  }
+
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("login")
+  public Boolean logInUser(){
+    return null;
   }
 
   /**
@@ -61,8 +71,21 @@ public class UserResource {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("all")
   public List<User> getAllUsers(){
-    return _userDao.getAllUser();
+    return _userDao.getAllUsers();
+  }
+
+  /**
+   * Returns all User of the Company
+   * @param companyId
+   * @return a List of Users in Company
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("all/company/{id}")
+  public List<User> getUserByCompany(@PathParam("id") Long companyId){
+    return _userDao.getUsersByCompany(companyId);
   }
 
   /**
@@ -74,20 +97,55 @@ public class UserResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{id}")
   public User getUser(@PathParam("id") Long id){
-    return _userDao.getUser(id);
+    return _userDao.getUserById(id);
   }
 
   /**
-   * Returns all User of the Company
-   * @param companyId
-   * @return a List of Users in Company
+   * Get User by Username
+   * @param username
+   * @return a User
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("company/{id}")
-  public List<User> getUserByCompany(@PathParam("id") Long companyId){
-    Company company = _companyDao.getCompany(companyId);
-    return _userDao.getUsersByCompany(company);
+  @Path("username/{username}")
+  public User getUser(@PathParam("username") String username){
+    return _userDao.getUserByUsername(username);
+  }
+
+  /**
+   * Get the List of Phone Numbers of the User
+   * @param id
+   * @return a List of Phone Numbers
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{id}/phone")
+  public List<PhoneNumber> getPhoneNumberOfUser(@PathParam("id") Long id){
+    return _userDao.getUserById(id).getPhoneNumbers();
+  }
+
+  /**
+   * Get the List of Contracts of the User
+   * @param id
+   * @return a List of Contracts
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{id}/contracts")
+  public List<Contract> getContractsOfUser(@PathParam("id") Long id){
+    return _userDao.getUserById(id).getContractObjects();
+  }
+
+  /**
+   * Get the Company of the User
+   * @param id
+   * @return a Company
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{id}/company")
+  public Company getCompanyOfUser(@PathParam("id") Long id){
+    return _userDao.getUserById(id).getCompany();
   }
 
   /**
@@ -97,8 +155,18 @@ public class UserResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
+  @Path("update")
   public User updateUser(User user){
-    return _userDao.updateUser(user);
+    return _userDao.save(user);
+  }
+
+  /**
+   * Delete all Users
+   */
+  @DELETE
+  @Path("remove/all")
+  public void removeAllCompanies(){
+    _userDao.removeAllUsers();
   }
 
   /**
@@ -106,9 +174,8 @@ public class UserResource {
    * @param id
    */
   @DELETE
-  @Produces(MediaType.APPLICATION_JSON)
-  @Path("{id}")
-  public void deleteUser(@PathParam("id") Long id){
-    _userDao.deleteUser(id);
+  @Path("remove/{id}")
+  public void removeUser(@PathParam("id") Long id){
+    _userDao.removeUser(id);
   }
 }

@@ -57,6 +57,6 @@ public class Feature implements Serializable {
 
   @Override
   public String toString() {
-    return "Feature [\n\tid=" + id + ", \n\tnumber=" + number + "\n]";
+    return "Feature [id=" + id + ", number=" + number + "]";
   }
 }

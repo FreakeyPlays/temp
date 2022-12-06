@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,6 +77,11 @@ public class Company implements Serializable {
     this.department = department;
   }
 
+  @JsonbTransient
+  public List<Contract> getContractObjects(){
+    return contracts;
+  }
+
   public List<Long> getContracts() {
     List<Long> list = new ArrayList<>();
 
@@ -92,6 +98,11 @@ public class Company implements Serializable {
 
   public void setContracts(List<Contract> contracts) {
     this.contracts = contracts;
+  }
+
+  @JsonbTransient
+  public List<User> getUserObjects(){
+    return users;
   }
 
   public List<Long> getUsers() {

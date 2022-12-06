@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -137,6 +138,11 @@ public class User implements Serializable {
     this.password = password;
   }
 
+  @JsonbTransient
+  public List<Contract> getContractObjects(){
+    return contracts;
+  }
+
   public List<Long> getContracts() {
     List<Long> list = new ArrayList<>();
 
@@ -154,6 +160,11 @@ public class User implements Serializable {
     this.contracts = contracts;
   }
 
+  @JsonbTransient
+  public Company getCompany(){
+    return companyId;
+  }
+
   public Long getCompanyId() {
     return companyId.getId();
   }
@@ -164,8 +175,8 @@ public class User implements Serializable {
 
   @Override
   public String toString() {
-    return "User [\n\tid=" + id + ", \n\tlastName=" + lastName + ", \n\tfirstName=" + firstName + ", \n\tusername=" + username
-        + ", \n\temail=" + email + ", \n\tphoneNumbers=" + phoneNumbers + ", \n\tisAdmin=" + isAdmin + 
-        ", \n\tpassword=" + password + ", \n\tcontracts=" + contracts + ", \n\tcompanyId=" + companyId + "\n]";
+    return "User [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", username=" + username
+        + ", email=" + email + ", phoneNumbers=" + phoneNumbers + ", isAdmin=" + isAdmin + 
+        ", password=" + password + ", contracts=" + contracts + ", companyId=" + companyId + "]";
   }
 }

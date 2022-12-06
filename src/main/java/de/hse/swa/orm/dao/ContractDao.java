@@ -6,6 +6,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -17,47 +18,53 @@ public class ContractDao {
   @Inject
   EntityManager entityManager;
 
-  @Transactional 
-  public Contract addContract(Contract contract) {
-      entityManager.persist(contract);
-      return contract;
+  public List<Contract> getAllContracts() { 
+  	TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract", Contract.class);
+  	return query.getResultList();
   }
 
   public List<Contract> getActiveContracts() {
   	LocalDate today = LocalDate.now();
-    	TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.endDate >:today", Contract.class);
-    	query.setParameter("today", today);
-    	return query.getResultList();
-   }
+    TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.endDate >:today", Contract.class);
+    query.setParameter("today", today);
+    return query.getResultList();
+  }
 
   public List<Contract> getContractsByCompany(Company company) { 
-    	TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.company.id=:id", Contract.class);
-    	query.setParameter("id", company.getId());
-    	return query.getResultList();
-  }
-  
-  public List<Contract> getContracts() { 
-  	TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract", Contract.class);
+  	TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.company.id=:id", Contract.class);
+  	query.setParameter("id", company.getId());
   	return query.getResultList();
   }
- 
+
   public Contract getContract(Long id) { 
-  	 TypedQuery<Contract> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.id=:id", Contract.class);
-  	 query.setParameter("id", id);
-  	 return query.getSingleResult();
+  	 return entityManager.find(Contract.class, id);
   }
 
   @Transactional
-  public Contract updateContract(Contract contract) {
-  	entityManager.merge(contract);
+  public Contract save(Contract contract){
+    if(contract.getId() != null){
+  	  entityManager.merge(contract);
+    } else {
+      entityManager.persist(contract);
+    }
+
     return contract;
   }
-  
+
   @Transactional
-  public void deleteContract(Long id) {
-  	 TypedQuery<Company> query = entityManager.createQuery("SELECT contract FROM Contract contract WHERE contract.id=:id", Company.class);
-	  query.setParameter("id", id);
-    Company company = query.getSingleResult();
-  	entityManager.remove(entityManager.contains(company) ? company : entityManager.merge(company));
+  public void removeAllContracts(){
+    try{
+      Query del = entityManager.createQuery("DELETE FROM Contract WHERE id >= 0");
+      del.executeUpdate();
+    } catch (SecurityException | IllegalStateException e){
+      e.printStackTrace();
+    }
+
+    return;
+  }
+
+  @Transactional
+  public void removeContract(Long id) {
+    entityManager.remove(entityManager.find(Contract.class, id));
   }
 }
