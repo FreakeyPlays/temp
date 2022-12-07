@@ -65,7 +65,7 @@ public class UserDao {
     entityManager.remove(entityManager.find(User.class, id));
   }
 
-  public Boolean login(String username, String password){
+  public Boolean loginUser(String username, String password){
     TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user WHERE user.username=:username AND user.password=:password", User.class)
       .setParameter("username", username)
       .setParameter("password", password);

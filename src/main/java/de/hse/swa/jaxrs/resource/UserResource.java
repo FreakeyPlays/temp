@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import de.hse.swa.orm.dao.CompanyDao;
@@ -61,8 +62,11 @@ public class UserResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("login")
-  public Boolean logInUser(){
-    return null;
+  public Boolean loginUser(
+    @QueryParam("username") String username, 
+    @QueryParam("password") String password
+  ){
+    return _userDao.loginUser(username, password);
   }
 
   /**

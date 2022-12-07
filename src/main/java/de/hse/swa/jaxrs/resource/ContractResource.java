@@ -77,6 +77,17 @@ public class ContractResource {
   }
 
   /**
+   * Get all Contracts
+   * @return a List of all Contracts
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("all/active")
+  public List<Contract> getAllActiveContracts(){
+    return _contractDao.getActiveContracts();
+  }
+
+  /**
    * Get a Contract by ID
    * @param id
    * @return a Contract

@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import de.hse.swa.orm.dao.CompanyDao;
+import de.hse.swa.orm.model.Address;
 import de.hse.swa.orm.model.Company;
 import de.hse.swa.orm.model.Contract;
 import de.hse.swa.orm.model.User;
@@ -97,6 +98,18 @@ public class CompanyResource {
   @Path("{id}/contracts")
   public List<Contract> getContractsOfCompany(@PathParam("id") Long id){
     return _companyDao.getCompanyById(id).getContractObjects();
+  }
+
+  /**
+   * Get the Address of the Company
+   * @param id
+   * @return a Address
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("{id}/address")
+  public Address getAddressOfCompany(@PathParam("id") Long id){
+    return _companyDao.getCompanyById(id).getAddress();
   }
 
   /**
