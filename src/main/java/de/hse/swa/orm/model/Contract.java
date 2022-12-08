@@ -44,10 +44,10 @@ public class Contract implements Serializable {
   @Column(name="VERSION", length=16)
   private String version;
 
-  @OneToMany(mappedBy = "contract", orphanRemoval = true)
+  @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Ip> ips;
 
-  @OneToMany(mappedBy = "contract", orphanRemoval = true)
+  @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Feature> features;
 
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
@@ -56,7 +56,7 @@ public class Contract implements Serializable {
              inverseJoinColumns = @JoinColumn(name="USER_ID"))
   private List<User> users;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinColumn(name="COMPANY_ID", referencedColumnName = "id")
   private Company companyId;
 

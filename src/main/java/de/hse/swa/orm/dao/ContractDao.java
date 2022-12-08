@@ -6,7 +6,6 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -54,8 +53,12 @@ public class ContractDao {
   @Transactional
   public void removeAllContracts(){
     try{
-      Query del = entityManager.createQuery("DELETE FROM Contract WHERE id >= 0");
-      del.executeUpdate();
+      entityManager.createQuery("DELETE FROM Feature WHERE id >= 0")
+        .executeUpdate();
+      entityManager.createQuery("DELETE FROM Ip WHERE id >= 0")
+        .executeUpdate();
+      entityManager.createQuery("DELETE FROM Contract WHERE id >= 0")
+        .executeUpdate();
     } catch (SecurityException | IllegalStateException e){
       e.printStackTrace();
     }

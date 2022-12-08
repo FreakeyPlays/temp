@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class User implements Serializable {
   @Column(name="EMAIL", length=64, unique=true)
   private String email;
 
-  @OneToMany(mappedBy = "user", orphanRemoval = true)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<PhoneNumber> phoneNumbers;
 
   @Column(name="IS_ADMIN")
@@ -156,6 +157,7 @@ public class User implements Serializable {
     return list;
   }
 
+  @JsonbTransient
   public void setContracts(List<Contract> contracts) {
     this.contracts = contracts;
   }

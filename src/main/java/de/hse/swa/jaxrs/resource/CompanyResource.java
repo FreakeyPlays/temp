@@ -15,6 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import de.hse.swa.orm.dao.CompanyDao;
+import de.hse.swa.orm.dao.ContractDao;
+import de.hse.swa.orm.dao.UserDao;
 import de.hse.swa.orm.model.Address;
 import de.hse.swa.orm.model.Company;
 import de.hse.swa.orm.model.Contract;
@@ -26,6 +28,12 @@ public class CompanyResource {
 
   @Inject
   CompanyDao _companyDao;
+
+  @Inject
+  UserDao _userDao;
+
+  @Inject
+  ContractDao _contractDao;
 
   /**
    * Creates a new Company with Data from the Body
@@ -131,6 +139,8 @@ public class CompanyResource {
   @DELETE
   @Path("remove/all")
   public void removeAllCompanies(){
+    _userDao.removeAllUsers();
+    _contractDao.removeAllContracts();
     _companyDao.removeAllCompanies();
   }
 
