@@ -104,7 +104,6 @@ public class CompanyResourceTest {
       .body("id", equalTo(this.current_id.intValue()));
   }
 
-  //TODO
   @Test
   public void getAddressOfCompanyTest(){
     given()
@@ -112,19 +111,30 @@ public class CompanyResourceTest {
     .when()
       .get("/company/{id}/address")
     .then()
-      .statusCode(200);
+      .statusCode(200)
+      .body(
+        "streetName", equalTo("A_Falndernstrasse")
+      );
   }
 
-  //TODO
   @Test
   public void updateCompanyTest(){
+    Company company = createCompanyObject("A_");
+    company.setId(this.current_id);
+    company.setCompanyName("Updated Name");
+    company.setDepartment("Updated Department");
+
     given()
       .contentType("application/json")
-      .body()
+      .body(company)
     .when()
       .put("/company/update")
     .then()
-      .statusCode(200);
+      .statusCode(200)
+      .body(
+        "companyName", equalTo("Updated Name"),
+        "department", equalTo("Updated Department")
+      );
   }
 
   @Test
